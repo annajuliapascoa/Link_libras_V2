@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.linklibras.exception.EmailJaCadastradoException;
 import br.com.linklibras.exception.CredenciaisInvalidasException;
+import br.com.linklibras.dto.LoginRespostaDTO;
 
 @Service
 public class AuthService {
@@ -19,14 +20,18 @@ public class AuthService {
     private final UsuarioRepository usuarioRepository;
     private final InterpreteRepository interpreteRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Autowired
     public AuthService(
             UsuarioRepository usuarioRepository,
-            InterpreteRepository interpreteRepository) {
+            InterpreteRepository interpreteRepository,
+            JwtService jwtService) {
 
         this.usuarioRepository = usuarioRepository;
         this.interpreteRepository = interpreteRepository;
+        this.jwtService = jwtService;
+
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -84,38 +89,51 @@ public class AuthService {
     }
 
 
-    public Usuario loginUsuario(LoginDTO dados) {
+    public LoginRespostaDTO loginUsuario(LoginDTO dados) {
 
         Usuario usuario = usuarioRepository.findByEmail(dados.getEmail())
                 .orElseThrow(() -> new CredenciaisInvalidasException("E-mail ou senha inválidos."));
 
-        boolean senhaCorreta = passwordEncoder.matches(
-                dados.getSenha(),
-                usuario.getSenhahash()
-        );
+        if (!passwordEncoder.matches(
+                dados.getSenha(), usuario.getSenhahash())) {
 
-        if (!senhaCorreta) {
             throw new CredenciaisInvalidasException("E-mail ou senha inválidos.");
         }
 
-        return usuario;
+        String token = jwtService.gerarToken(
+                usuario.getIdUsuario(), "USUARIO");
+
+        return new LoginRespostaDTO(
+                usuario.getIdUsuario(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                "USUARIO",
+                token
+        );
+
     }
 
 
-    public Interprete loginInterprete(LoginDTO dados) {
+    public LoginRespostaDTO loginInterprete(LoginDTO dados) {
 
         Interprete interprete = interpreteRepository.findByEmail(dados.getEmail())
                 .orElseThrow(() -> new CredenciaisInvalidasException("E-mail ou senha inválidos."));
 
-        boolean senhaCorreta = passwordEncoder.matches(
-                dados.getSenha(),
-                interprete.getSenhaHash()
-        );
+        if (!passwordEncoder.matches(
+                dados.getSenha(), interprete.getSenhaHash())) {
 
-        if (!senhaCorreta) {
             throw new CredenciaisInvalidasException("E-mail ou senha inválidos.");
         }
 
-        return interprete;
+        String token = jwtService.gerarToken(
+                interprete.getIdInterprete(), "INTERPRETE");
+
+        return new LoginRespostaDTO(
+                interprete.getIdInterprete(),
+                interprete.getNome(),
+                interprete.getEmail(),
+                "INTERPRETE",
+                token
+        );
     }
 }

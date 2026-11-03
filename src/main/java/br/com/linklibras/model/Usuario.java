@@ -1,6 +1,8 @@
 package br.com.linklibras.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+
 import java.time.LocalDate;
 
 @Entity
@@ -39,15 +41,16 @@ public class Usuario {
     @Column(name = "e_surdo")
     private Boolean eSurdo;
 
-    @Column(name = "sexo")
+    @Pattern(regexp = "M |F |O")
+    @Column(name = "sexo", length = 1)
     private String sexo;
 
     public Usuario() {
 
     }
 
-    // Getters e Setters
 
+    // Getters e Setters
 
     public Integer getIdUsuario() {
         return idUsuario;

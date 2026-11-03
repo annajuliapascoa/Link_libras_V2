@@ -46,7 +46,7 @@ public class Interprete {
     @Column(name = "valor_hora")
     private BigDecimal valorHora;
 
-    @Pattern(regexp = "M |F |O")
+    @Pattern(regexp = "M|F|O")
     @Column(name = "sexo", length = 1)
     private String sexo;
 

@@ -41,7 +41,7 @@ public class Usuario {
     @Column(name = "e_surdo")
     private Boolean eSurdo;
 
-    @Pattern(regexp = "M |F |O")
+    @Pattern(regexp = "M|F|O")
     @Column(name = "sexo", length = 1)
     private String sexo;
 

@@ -1,9 +1,12 @@
 package br.com.linklibras.dto;
 
 import jakarta.validation.constraints.*;
+import org.springframework.context.annotation.Import;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 public class CadastroInterpreteDTO {
 

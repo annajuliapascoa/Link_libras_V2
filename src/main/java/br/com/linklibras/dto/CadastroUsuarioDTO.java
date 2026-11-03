@@ -3,14 +3,16 @@ package br.com.linklibras.dto;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 public class CadastroUsuarioDTO {
 
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
 
-    @NotBlank(message = "A data de nascimento é obrigatória.")
-    @Past(message = "A data de nascimento deve ser anterior a data atual.")
+    @NotNull(message = "A data de nascimento é obrigatória.")
+    @Past(message = "A data de nascimento deve ser anterior à data atual.")
     private LocalDate dataNascimento;
 
     @NotBlank(message = "O e-mail é obrigatório.")

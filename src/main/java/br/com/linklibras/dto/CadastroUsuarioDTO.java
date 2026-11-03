@@ -5,6 +5,8 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class CadastroUsuarioDTO {
 
@@ -27,10 +29,11 @@ public class CadastroUsuarioDTO {
     private String cidade;
     private String bairro;
 
-    @NotBlank(message = "O sexo é obrigatório")
-    @Pattern(regexp = "M | F | O", message = "Informe M, F ou O.")
+    @NotNull(message = "O sexo é obrigatório")
+    @Pattern(regexp = "M|F|O", message = "Informe M, F ou O.")
     private String sexo;
 
+    @JsonProperty("eSurdo")
     @NotNull(message = "Informe se o usuário é surdo.")
     private Boolean eSurdo;
 

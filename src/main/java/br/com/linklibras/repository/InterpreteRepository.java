@@ -10,5 +10,5 @@ public interface InterpreteRepository extends JpaRepository<Interprete, Integer>
     Optional<Integer> findByEmail(String email);
 
     boolean existsByEmail(String email);
-    
+
 }

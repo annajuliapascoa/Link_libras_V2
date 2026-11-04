@@ -1,5 +1,7 @@
 package br.com.linklibras.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,7 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,46 +29,55 @@ public class SecurityConfig {
             throws Exception {
 
         http
-                //Desativa a proteção CSRF
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
-
-                // Configura a aplicação para não utilizar sessões
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
-                // Define as permissões de acesso
                 .authorizeHttpRequests(auth -> auth
 
-                        // Cadastros públicos
                         .requestMatchers(HttpMethod.POST,
                                 "/api/auth/usuarios/cadastro",
                                 "/api/auth/interpretes/cadastro"
                         ).permitAll()
 
-                        // Logins públicos
                         .requestMatchers(HttpMethod.POST,
                                 "/api/auth/usuarios/login",
                                 "/api/auth/interpretes/login"
                         ).permitAll()
 
-                        // Demais rotas exigem autenticação
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/interpretes/destaques",
+                                "/api/interpretes"
+                        ).permitAll()
+
                         .anyRequest().authenticated()
                 )
-
-                // Desativa autenticação HTTP Basic
                 .httpBasic(basic -> basic.disable())
-
-                // Desativa formulário padrão de login
                 .formLogin(form -> form.disable());
 
-                // Adiciona o filtro JWT antes do filtro padrão
-                http.addFilterBefore(
-                        jwtAuthenticationFilter,
-                    UsernamePasswordAuthenticationFilter.class
-                );
+        http.addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+        );
 
         return http.build();
     }
-}
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of(
+                "http://127.0.0.1:5500",
+                "http://localhost:5500"
+        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+}

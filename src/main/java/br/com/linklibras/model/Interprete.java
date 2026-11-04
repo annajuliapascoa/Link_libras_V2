@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "interprete")
@@ -12,7 +14,6 @@ public class Interprete {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id_interprete")
     private Integer idInterprete;
 
@@ -50,11 +51,23 @@ public class Interprete {
     @Column(name = "sexo", length = 1)
     private String sexo;
 
-    public Interprete() {
+    // NOVO: foto
+    @Column(name = "foto", length = 500)
+    private String foto;
 
+    // NOVO: especialidades (N:N)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "interprete_has_especialidade",
+            joinColumns = @JoinColumn(name = "interprete_id_interprete"),
+            inverseJoinColumns = @JoinColumn(name = "especialidade_id_especialidade")
+    )
+    private Set<Especialidade> especialidades = new HashSet<>();
+
+    public Interprete() {
     }
 
-    // Gatters e Setters
+    // ===== getters/setters existentes =====
 
     public Integer getIdInterprete() {
         return idInterprete;
@@ -150,5 +163,23 @@ public class Interprete {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    // ===== NOVOS =====
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public Set<Especialidade> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(Set<Especialidade> especialidades) {
+        this.especialidades = especialidades;
     }
 }

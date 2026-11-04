@@ -45,6 +45,15 @@ public class Usuario {
     @Column(name = "sexo", length = 1)
     private String sexo;
 
+    @Column(name = "cpf", unique = true, length = 14)
+    private String cpf;
+
+    @Column(name = "cep", length = 9)
+    private String cep;
+
+    @Column(name = "complemento", length = 150)
+    private String complemento;
+
     public Usuario() {
 
     }
@@ -138,5 +147,29 @@ public class Usuario {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

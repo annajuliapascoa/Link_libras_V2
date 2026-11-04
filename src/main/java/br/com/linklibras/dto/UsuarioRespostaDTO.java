@@ -11,6 +11,9 @@ public class UsuarioRespostaDTO {
     private String bairro;
     private Boolean eSurdo;
     private String sexo;
+    private String cpf;
+    private String cep;
+    private String complemento;
 
     public UsuarioRespostaDTO() {
 
@@ -88,5 +91,29 @@ public class UsuarioRespostaDTO {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

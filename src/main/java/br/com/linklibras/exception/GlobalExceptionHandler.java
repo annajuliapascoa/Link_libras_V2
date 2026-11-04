@@ -47,5 +47,13 @@ public class GlobalExceptionHandler {
                 .body(Map.of("mensagem", mensagem));
     }
 
+    @ExceptionHandler(CpfJaCadastradoException.class)
+    public ResponseEntity<String> tratarCpfDuplicado(
+            CpfJaCadastradoException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
 
 }

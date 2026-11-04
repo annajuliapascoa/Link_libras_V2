@@ -3,6 +3,7 @@ package br.com.linklibras.service;
 import br.com.linklibras.dto.CadastroInterpreteDTO;
 import br.com.linklibras.dto.CadastroUsuarioDTO;
 import br.com.linklibras.dto.LoginDTO;
+import br.com.linklibras.exception.CpfJaCadastradoException;
 import br.com.linklibras.model.Interprete;
 import br.com.linklibras.model.Usuario;
 import br.com.linklibras.repository.InterpreteRepository;
@@ -42,11 +43,18 @@ public class AuthService {
             throw new EmailJaCadastradoException("Este e-mail já está cadastrado como usuário.");
         }
 
+        if (usuarioRepository.existsByCpf(dados.getCpf())) {
+            throw new CpfJaCadastradoException("Este CPF já está cadastrado.");
+        }
+
         Usuario usuario = new Usuario();
 
         usuario.setNome(dados.getNome());
         usuario.setDataNascimento(dados.getDataNascimento());
         usuario.setEmail(dados.getEmail());
+        usuario.setCpf(dados.getCpf());
+        usuario.setCep(dados.getCep());
+        usuario.setComplemento(dados.getComplemento());
 
         String senhaCriptografada = passwordEncoder.encode(dados.getSenha());
         usuario.setSenhahash(senhaCriptografada);

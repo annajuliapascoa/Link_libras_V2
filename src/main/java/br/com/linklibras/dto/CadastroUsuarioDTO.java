@@ -45,7 +45,7 @@ public class CadastroUsuarioDTO {
     private String cpf;
 
     @Pattern(
-            regexp = "\\d{8}",
+            regexp = "^$|\\d{8}",
             message = "CEP deve conter 8 números."
     )
     private String cep;

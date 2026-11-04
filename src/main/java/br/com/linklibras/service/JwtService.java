@@ -16,7 +16,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration")
+    @Value("${jwt.expiration}")
     private long expiration;
 
     //Obtém a chave utilizada para assinar e validar os tokens

@@ -94,6 +94,10 @@ public class AuthService {
         Usuario usuario = usuarioRepository.findByEmail(dados.getEmail())
                 .orElseThrow(() -> new CredenciaisInvalidasException("E-mail ou senha inválidos."));
 
+        System.out.println("Usuário encontrado: " + usuario.getEmail());
+        System.out.println("Senha corresponde: " +
+                passwordEncoder.matches(dados.getSenha(), usuario.getSenhahash()));
+
         if (!passwordEncoder.matches(
                 dados.getSenha(), usuario.getSenhahash())) {
 

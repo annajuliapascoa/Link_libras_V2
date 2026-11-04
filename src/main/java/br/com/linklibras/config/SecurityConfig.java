@@ -28,14 +28,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
                             // Cadastros públicos
                             .requestMatchers(HttpMethod.POST,
-                                    "/usuarios/cadastro",
-                                    "/interpretes/cadastro"
+                                    "/api/auth/usuarios/cadastro",
+                                    "/api/auth/interpretes/cadastro"
                             ).permitAll()
 
                             // Logins públicos
                             .requestMatchers(HttpMethod.POST,
-                                    "/usuarios/login",
-                                    "/interpretes/login"
+                                    "/api/auth/usuarios/login",
+                                    "/api/auth/interpretes/login"
                             ).permitAll()
 
                             // Demais rotas exigem autenticação

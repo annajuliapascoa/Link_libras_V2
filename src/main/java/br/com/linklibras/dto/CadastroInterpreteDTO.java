@@ -37,6 +37,8 @@ public class CadastroInterpreteDTO {
     @Pattern(regexp = "M|F|O", message = "Informe M, F ou O.")
     private String sexo;
 
+    private String foto;
+
     public CadastroInterpreteDTO() {
 
     }
@@ -129,5 +131,13 @@ public class CadastroInterpreteDTO {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

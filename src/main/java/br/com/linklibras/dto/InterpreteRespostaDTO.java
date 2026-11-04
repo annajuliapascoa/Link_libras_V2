@@ -14,6 +14,7 @@ public class InterpreteRespostaDTO {
     private String descricao;
     private BigDecimal valorHora;
     private String sexo;
+    private String foto;
 
     public InterpreteRespostaDTO() {
 
@@ -99,5 +100,13 @@ public class InterpreteRespostaDTO {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

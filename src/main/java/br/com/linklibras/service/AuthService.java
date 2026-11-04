@@ -92,6 +92,7 @@ public class AuthService {
         interprete.setDescricao(dados.getDescricao());
         interprete.setValorHora(dados.getValorHora());
         interprete.setSexo(dados.getSexo());
+        interprete.setFoto(dados.getFoto());
 
         return interpreteRepository.save(interprete);
     }

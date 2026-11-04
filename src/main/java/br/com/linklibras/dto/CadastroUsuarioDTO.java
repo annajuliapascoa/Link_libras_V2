@@ -37,6 +37,22 @@ public class CadastroUsuarioDTO {
     @NotNull(message = "Informe se o usuário é surdo.")
     private Boolean eSurdo;
 
+    @NotBlank(message = "CPF é obrigatório.")
+    @Pattern(
+            regexp = "\\d{11}",
+            message = "CPF deve conter 11 números."
+    )
+    private String cpf;
+
+    @Pattern(
+            regexp = "\\d{8}",
+            message = "CEP deve conter 8 números."
+    )
+    private String cep;
+
+    private String complemento;
+
+
     public CadastroUsuarioDTO() {
 
     }
@@ -121,5 +137,29 @@ public class CadastroUsuarioDTO {
 
     public void seteSurdo(Boolean eSurdo) {
         this.eSurdo = eSurdo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

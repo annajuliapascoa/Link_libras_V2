@@ -1,7 +1,7 @@
 package br.com.linklibras.dto;
 
 import jakarta.validation.constraints.*;
-import org.springframework.context.annotation.Import;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ public class CadastroInterpreteDTO {
     @Pattern(regexp = "M|F|O", message = "Informe M, F ou O.")
     private String sexo;
 
-    private String foto;
+    private MultipartFile foto;
 
     public CadastroInterpreteDTO() {
 
@@ -133,11 +133,11 @@ public class CadastroInterpreteDTO {
         this.sexo = sexo;
     }
 
-    public String getFoto() {
+    public MultipartFile getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(MultipartFile foto) {
         this.foto = foto;
     }
 }

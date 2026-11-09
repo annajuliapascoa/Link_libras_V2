@@ -48,7 +48,8 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET,
                                 "/api/interpretes/destaques",
-                                "/api/interpretes"
+                                "/api/interpretes",
+                                "/api/interpretes/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()

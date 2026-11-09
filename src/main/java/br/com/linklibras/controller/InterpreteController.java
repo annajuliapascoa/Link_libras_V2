@@ -22,6 +22,11 @@ public class InterpreteController {
         return interpreteService.buscarPrimeiros9();
     }
 
+    @GetMapping("/{id}")
+    public InterpreteCardDTO buscarPorId(@PathVariable Integer id) {
+        return interpreteService.buscarPorId(id);
+    }
+
     // Busca com filtros opcionais.
     // Ex.: /api/interpretes?cidade=Cotia&nome=Fernanda&especialidades=Presencial,Inglês&precoMax=150
     @GetMapping

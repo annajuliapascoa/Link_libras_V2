@@ -13,6 +13,7 @@ public class InterpreteCardDTO {
     private BigDecimal valorHora;
     private String foto;
     private List<String> especialidades;
+    private String telefone;
 
     public InterpreteCardDTO(
             Integer id,
@@ -22,7 +23,8 @@ public class InterpreteCardDTO {
             String descricao,
             BigDecimal valorHora,
             String foto,
-            List<String> especialidades) {
+            List<String> especialidades,
+            String telefone) {
 
         this.id = id;
         this.nome = nome;
@@ -32,6 +34,7 @@ public class InterpreteCardDTO {
         this.valorHora = valorHora;
         this.foto = foto;
         this.especialidades = especialidades;
+        this.telefone = telefone;
     }
 
     public Integer getId() {
@@ -64,5 +67,9 @@ public class InterpreteCardDTO {
 
     public List<String> getEspecialidades() {
         return especialidades;
+    }
+
+    public String getTelefone() {
+        return telefone;
     }
 }

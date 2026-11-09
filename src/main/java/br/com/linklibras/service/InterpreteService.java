@@ -74,6 +74,13 @@ public class InterpreteService {
                 .toList();
     }
 
+    // NOVO MÉTODO: buscar por ID para a página de perfil
+    public InterpreteCardDTO buscarPorId(Integer id) {
+        Interprete i = interpreteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Intérprete não encontrado"));
+        return toCardDTO(i);
+    }
+
     private InterpreteCardDTO toCardDTO(Interprete i) {
         List<String> especialidades = i.getEspecialidades()
                 .stream()
@@ -89,7 +96,8 @@ public class InterpreteService {
                 i.getDescricao(),
                 i.getValorHora(),
                 i.getFoto(),
-                especialidades
+                especialidades,
+                i.getTelefone() // <-- Passando o telefone
         );
     }
 }

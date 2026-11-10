@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 
@@ -49,6 +51,8 @@ public class CadastroInterpreteDTO {
     private String sexo;
 
     private MultipartFile foto;
+
+    private List<Integer> especialidades;
 
     public CadastroInterpreteDTO() {
 
@@ -174,5 +178,13 @@ public class CadastroInterpreteDTO {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public List<Integer> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(List<Integer> especialidades) {
+        this.especialidades = especialidades;
     }
 }

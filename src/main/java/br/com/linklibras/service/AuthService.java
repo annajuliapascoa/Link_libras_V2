@@ -4,6 +4,7 @@ import br.com.linklibras.dto.CadastroInterpreteDTO;
 import br.com.linklibras.dto.CadastroUsuarioDTO;
 import br.com.linklibras.dto.LoginDTO;
 import br.com.linklibras.exception.CpfJaCadastradoException;
+import br.com.linklibras.model.Especialidade;
 import br.com.linklibras.model.Interprete;
 import br.com.linklibras.model.Usuario;
 import br.com.linklibras.repository.InterpreteRepository;
@@ -14,6 +15,10 @@ import org.springframework.stereotype.Service;
 import br.com.linklibras.exception.EmailJaCadastradoException;
 import br.com.linklibras.exception.CredenciaisInvalidasException;
 import br.com.linklibras.dto.LoginRespostaDTO;
+import br.com.linklibras.repository.EspecialidadeRepository;
+
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class AuthService {
@@ -22,15 +27,18 @@ public class AuthService {
     private final InterpreteRepository interpreteRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EspecialidadeRepository especialidadeRepository;
 
     @Autowired
     public AuthService(
             UsuarioRepository usuarioRepository,
             InterpreteRepository interpreteRepository,
+            EspecialidadeRepository especialidadeRepository,
             JwtService jwtService) {
 
         this.usuarioRepository = usuarioRepository;
         this.interpreteRepository = interpreteRepository;
+        this.especialidadeRepository = especialidadeRepository;
         this.jwtService = jwtService;
 
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -94,6 +102,18 @@ public class AuthService {
         interprete.setDescricao(dados.getDescricao());
         interprete.setValorHora(dados.getValorHora());
         interprete.setSexo(dados.getSexo());
+
+        if (dados.getEspecialidades() != null && !dados.getEspecialidades().isEmpty()) {
+
+            List<Especialidade> especialidadesSelecionadas =
+                    especialidadeRepository.findAllById(dados.getEspecialidades());
+
+            if (especialidadesSelecionadas.size() != dados.getEspecialidades().stream().distinct().count()) {
+                throw new RuntimeException("Uma ou mais especialidades informadas não existem.");
+            }
+
+            interprete.setEspecialidades(new HashSet<>(especialidadesSelecionadas));
+        }
 
 
         return interpreteRepository.save(interprete);

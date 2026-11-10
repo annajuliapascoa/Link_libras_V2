@@ -14,6 +14,9 @@ public class Especialidade {
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
+    @Column(name = "categoria", nullable = false, length = 40)
+    private String categoria;
+
     public Especialidade() {
     }
 
@@ -31,5 +34,13 @@ public class Especialidade {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

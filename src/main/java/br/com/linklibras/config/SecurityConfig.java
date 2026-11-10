@@ -52,6 +52,10 @@ public class SecurityConfig {
                                 "/api/interpretes/**"
                         ).permitAll()
 
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/especialidades/**"
+                        ).permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(basic -> basic.disable())

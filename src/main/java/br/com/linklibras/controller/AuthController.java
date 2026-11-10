@@ -65,6 +65,9 @@ public class AuthController {
         resposta.setValorHora(interprete.getValorHora());
         resposta.setSexo(interprete.getSexo());
         resposta.setFoto(interprete.getFoto());
+        resposta.setCpf(interprete.getCpf());
+        resposta.setCep(interprete.getCep());
+        resposta.setComplemento(interprete.getComplemento());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }

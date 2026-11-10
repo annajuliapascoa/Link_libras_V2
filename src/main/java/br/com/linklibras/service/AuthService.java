@@ -86,13 +86,15 @@ public class AuthService {
         interprete.setSenhaHash(senhaCriptografada);
 
         interprete.setTelefone(dados.getTelefone());
+        interprete.setCep(dados.getCep());
         interprete.setEstado(dados.getEstado());
         interprete.setCidade(dados.getCidade());
         interprete.setBairro(dados.getBairro());
+        interprete.setComplemento(dados.getComplemento());
         interprete.setDescricao(dados.getDescricao());
         interprete.setValorHora(dados.getValorHora());
         interprete.setSexo(dados.getSexo());
-        interprete.setFoto(dados.getFoto());
+
 
         return interpreteRepository.save(interprete);
     }

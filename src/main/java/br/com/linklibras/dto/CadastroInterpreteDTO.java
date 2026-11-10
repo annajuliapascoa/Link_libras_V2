@@ -30,6 +30,17 @@ public class CadastroInterpreteDTO {
     private String bairro;
     private String descricao;
 
+    @NotBlank(message = "O CPF é obrigatório.")
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter 11 números.")
+    private String cpf;
+
+    @NotBlank(message = "O CEP é obrigatório.")
+    @Pattern(regexp = "\\d{8}", message = "O CEP deve conter 8 números.")
+    private String cep;
+
+    @Size(max = 150, message = "O complemento deve ter no máximo 150 caracteres.")
+    private String complemento;
+
     @DecimalMin(value = "0.01", message = "O valor por hora deve ser maior que zero.")
     private BigDecimal valorHora;
 
@@ -139,5 +150,29 @@ public class CadastroInterpreteDTO {
 
     public void setFoto(MultipartFile foto) {
         this.foto = foto;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

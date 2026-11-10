@@ -7,12 +7,11 @@ import br.com.linklibras.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import br.com.linklibras.dto.LoginRespostaDTO;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -47,9 +46,9 @@ public class AuthController {
     }
 
 
-    @PostMapping("/interpretes/cadastro")
+    @PostMapping(value = "/interpretes/cadastro", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<InterpreteRespostaDTO> cadastrarInterprete(
-            @Valid @RequestBody CadastroInterpreteDTO dados) {
+            @Valid @ModelAttribute CadastroInterpreteDTO dados) {
 
         Interprete interprete = authService.cadastrarInterprete(dados);
 

@@ -18,11 +18,9 @@ public class SupabaseStorageService {
     @Value("${supabase.key}")
     private String supabaseKey;
 
-    private final RestClient restClient;
+    private final RestClient restClient = RestClient.create();
 
-    public SupabaseStorageService(RestClient.Builder builder) {
-        this.restClient = builder.build();
-    }
+
 
     private static final String BUCKET = "fotos-interpretes";
 

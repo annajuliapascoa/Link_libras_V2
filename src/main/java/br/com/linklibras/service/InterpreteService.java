@@ -5,6 +5,7 @@ import br.com.linklibras.model.Especialidade;
 import br.com.linklibras.model.Interprete;
 import br.com.linklibras.repository.InterpreteRepository;
 import org.springframework.stereotype.Service;
+import br.com.linklibras.service.SupabaseStorageService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,9 +16,12 @@ import java.util.stream.Collectors;
 public class InterpreteService {
 
     private final InterpreteRepository interpreteRepository;
+    private final SupabaseStorageService supabaseStorageService;
 
-    public InterpreteService(InterpreteRepository interpreteRepository) {
+    public InterpreteService(InterpreteRepository interpreteRepository,
+                             SupabaseStorageService supabaseStorageService) {
         this.interpreteRepository = interpreteRepository;
+        this.supabaseStorageService = supabaseStorageService;
     }
 
     // ===== MANTENHA AQUI OS OUTROS MÉTODOS QUE JÁ EXISTIAM =====

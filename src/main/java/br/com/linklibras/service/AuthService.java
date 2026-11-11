@@ -16,7 +16,9 @@ import br.com.linklibras.exception.EmailJaCadastradoException;
 import br.com.linklibras.exception.CredenciaisInvalidasException;
 import br.com.linklibras.dto.LoginRespostaDTO;
 import br.com.linklibras.repository.EspecialidadeRepository;
+import br.com.linklibras.service.SupabaseStorageService;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -28,18 +30,21 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EspecialidadeRepository especialidadeRepository;
+    private final SupabaseStorageService supabaseStorageService;
 
     @Autowired
     public AuthService(
             UsuarioRepository usuarioRepository,
             InterpreteRepository interpreteRepository,
             EspecialidadeRepository especialidadeRepository,
-            JwtService jwtService) {
+            JwtService jwtService,
+            SupabaseStorageService supabaseStorageService) {
 
         this.usuarioRepository = usuarioRepository;
         this.interpreteRepository = interpreteRepository;
         this.especialidadeRepository = especialidadeRepository;
         this.jwtService = jwtService;
+        this.supabaseStorageService = supabaseStorageService;
 
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
@@ -103,6 +108,7 @@ public class AuthService {
         interprete.setValorHora(dados.getValorHora());
         interprete.setSexo(dados.getSexo());
 
+
         if (dados.getEspecialidades() != null && !dados.getEspecialidades().isEmpty()) {
 
             List<Especialidade> especialidadesSelecionadas =
@@ -115,6 +121,17 @@ public class AuthService {
             interprete.setEspecialidades(new HashSet<>(especialidadesSelecionadas));
         }
 
+
+        if (dados.getFoto() != null && !dados.getFoto().isEmpty()) {
+
+            try {
+                String caminhoFoto = supabaseStorageService.uploadFoto(dados.getFoto());
+
+                interprete.setFoto(caminhoFoto);
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao enviar a foto do intérprete.", e);
+            }
+        }
 
         return interpreteRepository.save(interprete);
     }

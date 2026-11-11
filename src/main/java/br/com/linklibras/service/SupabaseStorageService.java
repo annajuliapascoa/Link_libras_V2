@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -66,5 +67,31 @@ public class SupabaseStorageService {
                 .toBodilessEntity();
 
         return caminho;
+    }
+
+    public String gerarUrlAssinada(String caminho) {
+
+        if (caminho == null || caminho.isBlank()) {
+            return null;
+        }
+
+        String baseUrl = supabaseUrl.replaceAll("/+$", "");
+
+        Map<?, ?> resposta = restClient.post()
+                .uri(baseUrl + "/storage/v1/object/sign/"
+                        + BUCKET + "/" + caminho)
+                .header("apikey", supabaseKey)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Map.of("expiresIn", 86400))
+                .retrieve()
+                .body(Map.class);
+
+        if (resposta == null || resposta.get("signedURL") == null) {
+            throw new RuntimeException("Não foi possível gerar a URL da foto do intérprete.");
+        }
+
+        String urlAssinada = resposta.get("signedURL").toString();
+
+        return supabaseUrl + "/storage/v1" + urlAssinada;
     }
 }

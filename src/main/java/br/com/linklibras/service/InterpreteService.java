@@ -99,7 +99,7 @@ public class InterpreteService {
                 i.getEstado(),
                 i.getDescricao(),
                 i.getValorHora(),
-                i.getFoto(),
+                supabaseStorageService.gerarUrlAssinada(i.getFoto()),
                 especialidades,
                 i.getTelefone() // <-- Passando o telefone
         );

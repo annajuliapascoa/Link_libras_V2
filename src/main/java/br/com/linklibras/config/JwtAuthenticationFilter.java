@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
 import java.io.IOException;
 import java.util.Collections;
 
@@ -54,6 +55,11 @@ protected void doFilterInternal(
         String id = claims.getSubject();
         String perfil = claims.get("perfil", String.class);
 
+        UsuarioAutenticado usuario  = new UsuarioAutenticado(
+                Integer.valueOf(id),
+                perfil
+        );
+
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         id,
@@ -71,6 +77,5 @@ protected void doFilterInternal(
     }
 
     filterChain.doFilter(request, response);
-
     }
 }

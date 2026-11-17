@@ -1,8 +1,7 @@
 package br.com.linklibras.service;
 
-import br.com.linklibras.dto.CadastroInterpreteDTO;
-import br.com.linklibras.dto.CadastroUsuarioDTO;
-import br.com.linklibras.dto.LoginDTO;
+import br.com.linklibras.config.UsuarioAutenticado;
+import br.com.linklibras.dto.*;
 import br.com.linklibras.exception.CpfJaCadastradoException;
 import br.com.linklibras.model.Especialidade;
 import br.com.linklibras.model.Interprete;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.linklibras.exception.EmailJaCadastradoException;
 import br.com.linklibras.exception.CredenciaisInvalidasException;
-import br.com.linklibras.dto.LoginRespostaDTO;
 import br.com.linklibras.repository.EspecialidadeRepository;
 import br.com.linklibras.service.SupabaseStorageService;
 
@@ -110,7 +108,6 @@ public class AuthService {
         interprete.setSexo(dados.getSexo());
 
 
-
         if (dados.getEspecialidades() != null && !dados.getEspecialidades().isEmpty()) {
 
             List<Especialidade> especialidadesSelecionadas =
@@ -190,4 +187,65 @@ public class AuthService {
                 token
         );
     }
+
+    public Object buscarPerfil(UsuarioAutenticado autenticado) {
+
+        if ("USUARIO".equals(autenticado.perfil())) {
+
+            Usuario usuario = usuarioRepository.findById(autenticado.id())
+                    .orElseThrow(() ->
+                            new RuntimeException("Usuário não encontrado"));
+
+            UsuarioRespostaDTO resposta = new UsuarioRespostaDTO();
+
+            resposta.setIdUsuario(usuario.getIdUsuario());
+            resposta.setNome(usuario.getNome());
+            resposta.setEmail(usuario.getEmail());
+            resposta.setTelefone(usuario.getTelefone());
+            resposta.setEstado(usuario.getEstado());
+            resposta.setCidade(usuario.getCidade());
+            resposta.setBairro(usuario.getBairro());
+            resposta.seteSurdo(usuario.geteSurdo());
+            resposta.setSexo(usuario.getSexo());
+            resposta.setCpf(usuario.getCpf());
+            resposta.setCep(usuario.getCep());
+            resposta.setComplemento(usuario.getComplemento());
+
+            return resposta;
+        }
+
+        if ("INTERPRETE".equals(autenticado.perfil())) {
+
+            Interprete interprete = interpreteRepository.findById(autenticado.id())
+                    .orElseThrow(() ->
+                            new RuntimeException("Intérprete não encontrado."));
+
+            InterpreteRespostaDTO resposta = new InterpreteRespostaDTO();
+
+            resposta.setIdInterprete(interprete.getIdInterprete());
+            resposta.setNome(interprete.getNome());
+            resposta.setEmail(interprete.getEmail());
+            resposta.setTelefone(interprete.getTelefone());
+            resposta.setEstado(interprete.getEstado());
+            resposta.setCidade(interprete.getCidade());
+            resposta.setBairro(interprete.getBairro());
+            resposta.setDescricao(interprete.getDescricao());
+            resposta.setValorHora(interprete.getValorHora());
+            resposta.setSexo(interprete.getSexo());
+            resposta.setCpf(interprete.getCpf());
+            resposta.setCep(interprete.getCep());
+            resposta.setComplemento(interprete.getComplemento());
+
+            if (interprete.getFoto() != null) {
+                resposta.setFoto(
+                        supabaseStorageService.gerarUrlAssinada(interprete.getFoto())
+                );
+            }
+
+            return resposta;
+        }
+
+        throw new IllegalArgumentException("Perfil de usuário inválido.");
+    }
 }
+

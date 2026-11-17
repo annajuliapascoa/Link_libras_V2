@@ -62,7 +62,7 @@ protected void doFilterInternal(
 
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
-                        id,
+                        usuario,
                         null,
                         Collections.emptyList()
                 );

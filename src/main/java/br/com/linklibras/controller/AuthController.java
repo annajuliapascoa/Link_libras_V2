@@ -1,5 +1,6 @@
 package br.com.linklibras.controller;
 
+import br.com.linklibras.config.UsuarioAutenticado;
 import br.com.linklibras.dto.*;
 import br.com.linklibras.model.Interprete;
 import br.com.linklibras.model.Usuario;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import br.com.linklibras.dto.LoginRespostaDTO;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -93,5 +95,13 @@ public class AuthController {
         return ResponseEntity.ok(resposta);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<Object> buscarPerfil(
+            @AuthenticationPrincipal UsuarioAutenticado autenticado) {
+
+        Object resposta = authService.buscarPerfil(autenticado);
+
+        return ResponseEntity.ok(resposta);
+    }
 
 }

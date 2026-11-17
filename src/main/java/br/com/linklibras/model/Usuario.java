@@ -54,6 +54,9 @@ public class Usuario {
     @Column(name = "complemento", length = 150)
     private String complemento;
 
+    @Column(name = "foto", length = 500)
+    private String foto;
+
     public Usuario() {
 
     }
@@ -171,5 +174,13 @@ public class Usuario {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

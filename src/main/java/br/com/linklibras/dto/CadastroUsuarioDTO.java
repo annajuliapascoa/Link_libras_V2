@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class CadastroUsuarioDTO {
@@ -51,6 +52,8 @@ public class CadastroUsuarioDTO {
     private String cep;
 
     private String complemento;
+
+    private MultipartFile foto;
 
 
     public CadastroUsuarioDTO() {
@@ -161,5 +164,13 @@ public class CadastroUsuarioDTO {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public MultipartFile getFoto() {
+        return foto;
+    }
+
+    public void setFoto(MultipartFile foto) {
+        this.foto = foto;
     }
 }

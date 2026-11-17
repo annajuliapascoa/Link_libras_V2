@@ -93,6 +93,7 @@ public class AuthService {
 
         interprete.setNome(dados.getNome());
         interprete.setDataNascimento(dados.getDataNascimento());
+        interprete.setCpf(dados.getCpf());
         interprete.setEmail(dados.getEmail());
 
         String senhaCriptografada = passwordEncoder.encode(dados.getSenha());
@@ -107,6 +108,7 @@ public class AuthService {
         interprete.setDescricao(dados.getDescricao());
         interprete.setValorHora(dados.getValorHora());
         interprete.setSexo(dados.getSexo());
+
 
 
         if (dados.getEspecialidades() != null && !dados.getEspecialidades().isEmpty()) {

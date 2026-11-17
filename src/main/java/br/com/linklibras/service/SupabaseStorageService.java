@@ -75,6 +75,11 @@ public class SupabaseStorageService {
             return null;
         }
 
+        // Se já for uma URL externa, não precisa gerar URL assinada
+        if (caminho.startsWith("https://") || caminho.startsWith("http://")) {
+            return caminho;
+        }
+        
         String baseUrl = supabaseUrl.replaceAll("/+$", "");
 
         Map<?, ?> resposta = restClient.post()

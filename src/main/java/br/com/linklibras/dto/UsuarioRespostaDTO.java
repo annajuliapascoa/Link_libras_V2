@@ -14,6 +14,7 @@ public class UsuarioRespostaDTO {
     private String cpf;
     private String cep;
     private String complemento;
+    private String foto;
 
     public UsuarioRespostaDTO() {
 
@@ -115,5 +116,13 @@ public class UsuarioRespostaDTO {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

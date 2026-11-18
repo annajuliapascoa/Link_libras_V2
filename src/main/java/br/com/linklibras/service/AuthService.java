@@ -77,6 +77,15 @@ public class AuthService {
         usuario.seteSurdo(dados.geteSurdo());
         usuario.setSexo(dados.getSexo());
 
+        if (dados.getFoto() != null && !dados.getFoto().isEmpty()) {
+            try {
+                String caminhoFoto = supabaseStorageService.uploadFotoUsuario(dados.getFoto());
+                usuario.setFoto(caminhoFoto);
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao enviar a foto do usuário.", e);
+            }
+        }
+
         return usuarioRepository.save(usuario);
     }
 
@@ -210,6 +219,7 @@ public class AuthService {
             resposta.setCpf(usuario.getCpf());
             resposta.setCep(usuario.getCep());
             resposta.setComplemento(usuario.getComplemento());
+            resposta.setFoto(supabaseStorageService.gerarUrlAssinada(usuario.getFoto()));
 
             return resposta;
         }
@@ -235,12 +245,7 @@ public class AuthService {
             resposta.setCpf(interprete.getCpf());
             resposta.setCep(interprete.getCep());
             resposta.setComplemento(interprete.getComplemento());
-
-            if (interprete.getFoto() != null) {
-                resposta.setFoto(
-                        supabaseStorageService.gerarUrlAssinada(interprete.getFoto())
-                );
-            }
+            resposta.setFoto(supabaseStorageService.gerarUrlAssinada(interprete.getFoto()));
 
             return resposta;
         }

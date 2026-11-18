@@ -26,6 +26,15 @@ public class SupabaseStorageService {
     private static final String BUCKET = "fotos-interpretes";
 
     public String uploadFoto(MultipartFile foto) throws IOException {
+        return uploadFoto(foto, "interpretes");
+    }
+
+    public String uploadFotoUsuario(MultipartFile foto) throws IOException {
+        return uploadFoto(foto, "usuarios");
+    }
+
+    private String uploadFoto(MultipartFile foto, String pasta)
+        throws IOException {
 
         if (foto == null || foto.isEmpty()) {
             throw new IllegalArgumentException("Nenhuma foto foi enviada.");
@@ -55,7 +64,7 @@ public class SupabaseStorageService {
 
         String nomeArquivo = UUID.randomUUID() + extensao;
 
-        String caminho = "interpretes/" + nomeArquivo;
+        String caminho = pasta + "/" + nomeArquivo;
 
         restClient.post()
                 .uri(supabaseUrl + "/storage/v1/object/"

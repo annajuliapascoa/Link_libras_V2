@@ -26,7 +26,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/usuarios/cadastro")
+    @PostMapping(value = "/usuarios/cadastro", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UsuarioRespostaDTO> cadastrarUsuario(
             @Valid @RequestBody CadastroUsuarioDTO dados) {
 
@@ -43,6 +43,7 @@ public class AuthController {
         resposta.setBairro(usuario.getBairro());
         resposta.seteSurdo(usuario.geteSurdo());
         resposta.setSexo(usuario.getSexo());
+        resposta.setFoto(usuario.getFoto());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }

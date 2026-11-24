@@ -28,7 +28,7 @@ public class AuthController {
 
     @PostMapping(value = "/usuarios/cadastro", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UsuarioRespostaDTO> cadastrarUsuario(
-            @Valid @RequestBody CadastroUsuarioDTO dados) {
+            @Valid @ModelAttribute CadastroUsuarioDTO dados) {
 
         Usuario usuario = authService.cadastrarUsuario(dados);
 
